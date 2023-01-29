@@ -10,9 +10,9 @@ id roboshop &>>${LOG}
 if [ $? -ne 0 ];then
 useradd roboshop &>>${LOG}
 fi
-print_head "create a directory"
+
 mkdir -p /app &>>${LOG}
-STATUS_CHECK
+
 print_head "downloading catalogue files"
 curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>${LOG}
 STATUS_CHECK
