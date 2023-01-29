@@ -22,6 +22,7 @@ if [ $? -eq 0 ];then
   echo SUCCESS
   else
     echo FAILED
+    echo "refer log files for more information LOG - ${LOG}"
 exit
     fi
 mkdir -p /app &>>${LOG}
