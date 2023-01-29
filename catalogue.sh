@@ -14,8 +14,8 @@ if [ $? eq 0];then
   else
     echo FAILED
     fi
-useradd roboshop
-mkdir -p /app
+useradd roboshop &>>${LOG}
+mkdir -p /app &>>${LOG}
 echo -e "\e[33m downloading catalogue files\e[0m"
 curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
 if [ $? eq 0 ];then
@@ -31,19 +31,19 @@ if [ $? eq 0 ];then
     echo FAILED
     fi
 
-cd /app
+cd /app &>>${LOG}
 echo -e "\e[33m extracting catalogue file\e[0m"
-unzip /tmp/catalogue.zip
+unzip /tmp/catalogue.zip &>>${LOG}
 if [ $? eq 0 ];then
   echo SUCCESS
   else
     echo FAILED
     fi
 
-cd /app
+cd /app &>>${LOG}
 echo -e "\e[34m installing npm\e[0m"
 
-npm install
+npm install &>>${LOG}
 if [ $? eq 0 ];then
   echo SUCCESS
   else
@@ -57,21 +57,21 @@ if [ $? eq 0 ];then
     echo FAILED
       fi
 echo -e "\e[33m starting catalogue service\e[0m"
-systemctl daemon-reload
+systemctl daemon-reload &>>${LOG}
 if [ $? eq 0 ];then
   echo SUCCESS
   else
     echo FAILED
       fi
 echo -e "\e[33m enabling catalogue service\e[0m"
-systemctl enable catalogue
+systemctl enable catalogue &>>${LOG}
 if [ $? eq 0 ];then
   echo SUCCESS
   else
     echo FAILED
       fi
 echo -e "\e[33m starting catalogue service\e[0m"
-systemctl start catalogue
+systemctl start catalogue &>>${LOG}
 if [ $? eq 0 ];then
   echo SUCCESS
   else
