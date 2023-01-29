@@ -1,19 +1,19 @@
 source common.sh
 print_head "copy mongodb repo files"
-cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>{$LOG}
+cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${LOG}
 STATUS_CHECK
 print_head "Install Mongodb"
-yum install mongodb-org -y &>>{$LOG}
+yum install mongodb-org -y &>>${LOG}
 STATUS_CHECK
 print_head "Update Mongodb listen address"
-sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf &>>{$LOG}
+sed -i -e 's/127.0.0.1/0.0.0.0/' /etc/mongod.conf &>>${LOG}
 STATUS_CHECK
 
 print_head "Install Mongodb"
-systemctl enable mongod &>>{$LOG}
+systemctl enable mongod &>>${LOG}
 STATUS_CHECK
 
 print_head "install mongodb"
-systemctl restart mongod &>>{$LOG}
+systemctl restart mongod &>>${LOG}
 STATUS_CHECK
 
