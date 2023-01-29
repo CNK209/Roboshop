@@ -15,6 +15,11 @@ if [ $? -eq 0 ];then
     echo FAILED
     fi
 useradd roboshop &>>${LOG}
+if [ $? -eq 0 ];then
+  echo SUCCESS
+  else
+    echo FAILED
+    fi
 mkdir -p /app &>>${LOG}
 echo -e "\e[33m downloading catalogue files\e[0m"
 curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
