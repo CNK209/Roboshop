@@ -50,6 +50,6 @@ yum install mongodb-org-shell -y &>>${LOG}
 STATUS_CHECK
 
 print_head "loading mongodb schema"
-mongo --host 172.31.6.119 </app/schema/catalogue.js &>>${LOG}
+mongo --host mongodb-dev.devops009.online </app/schema/catalogue.js &>>${LOG}
 
 STATUS_CHECK
