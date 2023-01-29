@@ -6,7 +6,9 @@ STATUS_CHECK
 print_head "Remove nginx old content"
 rm -rf /usr/share/nginx/html/* &>>${LOG}
 STATUS_CHECK
+print_head "download frontend content"
 curl -o /tmp/frontend.zip https://roboshop-artifacts.s3.amazonaws.com/frontend.zip &>>${LOG}
+STATUS_CHECK
 cd /usr/share/nginx/html &>>${LOG}
 
 print_head "Extract frontend content"
@@ -20,6 +22,6 @@ STATUS_CHECK
 print_head "Enable Nginx"
 systemctl enable nginx &>>${LOG}
 STATUS_CHECK
-print_head "Restart nginx"
-systemctl start nginx &>>${LOG}
+print_head "start nginx"
+systemctl restart nginx &>>${LOG}
 STATUS_CHECK
