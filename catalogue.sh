@@ -10,7 +10,7 @@ id roboshop &>>${LOG}
 if [ $? -ne 0 ];then
 useradd roboshop &>>${LOG}
 fi
-
+STATUS_CHECK
 mkdir -p /app &>>${LOG}
 
 print_head "downloading catalogue files"
