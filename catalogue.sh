@@ -1,52 +1,52 @@
 source common.sh
-echo -e "\e[33m configuring node js repos\e[0m"
+print_head "configuring node js repos"
 curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${LOG}
 STATUS_CHECK
-echo -e "\e[32m install nodejs\e[0m"
+print_head "install nodejs"
 yum install nodejs -y &>>${LOG}
 STATUS_CHECK
-    echo -e "\e[33m Add application user\e[0m"
+print_head "Add application user"
 useradd roboshop &>>${LOG}
 STATUS_CHECK
 mkdir -p /app &>>${LOG}
-echo -e "\e[33m downloading catalogue files\e[0m"
+print_head "downloading catalogue files"
 curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
 STATUS_CHECK
-    echo -e "\e[34m removing old content\e[0m"
+print_head "removing old content"
 rm -rf /app/* &>>${LOG}
 STATUS_CHECK
 
 cd /app &>>${LOG}
-echo -e "\e[33m extracting catalogue file\e[0m"
+print_head "extracting catalogue file"
 unzip /tmp/catalogue.zip &>>${LOG}
 STATUS_CHECK
 
 cd /app &>>${LOG}
-echo -e "\e[34m installing npm\e[0m"
+print_head "installing npm"
 
 npm install &>>${LOG}
 STATUS_CHECK
-    echo -e "\e[34m confguring node js repos\e[0m"
+ print_head "confguring node js repos"
 cp ${script_location}/files/catalogue.service /etc/systemd/system/catalogue.service
 STATUS_CHECK
-echo -e "\e[33m starting catalogue service\e[0m"
+print_head "starting catalogue service"
 systemctl daemon-reload &>>${LOG}
 STATUS_CHECK
-echo -e "\e[33m enabling catalogue service\e[0m"
+print_head "enabling catalogue service"
 systemctl enable catalogue &>>${LOG}
 STATUS_CHECK
-echo -e "\e[33m starting catalogue service\e[0m"
+print_head "starting catalogue service"
 systemctl start catalogue &>>${LOG}
 STATUS_CHECK
-echo -e "\e[33m confguring mongodb service\e[0m"
+print_head "configuring mongodb service"
 cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${LOG}
 STATUS_CHECK
-echo -e "\e[33m INSTALLING mongodb client\e[0m"
+print_head "INSTALLING mongodb client"
 
 yum install mongodb-org-shell -y &>>${LOG}
 STATUS_CHECK
 
-echo -e "\e[33m loading mongodb schema\e[0m"
+print_head "loading mongodb schema"
 mongo --host 172.31.6.119 </app/schema/catalogue.js &>>${LOG}
 
 STATUS_CHECK
