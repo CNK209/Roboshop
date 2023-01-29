@@ -7,7 +7,7 @@ yum install nodejs -y &>>${LOG}
 STATUS_CHECK
 print_head "Add application user"
 id roboshop &>>${LOG}
-if [ $? -ne 0];then
+if [ $? -ne 0 ];then
 useradd roboshop &>>${LOG}
 fi
 print_head "create a directory"
