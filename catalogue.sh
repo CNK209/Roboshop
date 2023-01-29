@@ -9,7 +9,7 @@ else
   fi
 echo -e "\e[32m install nodejs\e[0m"
 yum install nodejs -y &>>${LOG}
-if [ $? -eq 0];then
+if [ $? -eq 0 ];then
   echo SUCCESS
   else
     echo FAILED
