@@ -14,6 +14,7 @@ if [ $? -eq 0 ];then
   else
     echo FAILED
     fi
+    echo -e "\e[33m Add application user\e[0m"
 useradd roboshop &>>${LOG}
 if [ $? -eq 0 ];then
   echo SUCCESS
