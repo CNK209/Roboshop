@@ -10,10 +10,11 @@ id roboshop &>>${LOG}
 if [ $? -ne 0];then
 useradd roboshop &>>${LOG}
 fi
-STATUS_CHECK
+print_head "create a directory"
 mkdir -p /app &>>${LOG}
+STATUS_CHECK
 print_head "downloading catalogue files"
-curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip
+curl -L -o /tmp/catalogue.zip https://roboshop-artifacts.s3.amazonaws.com/catalogue.zip &>>${LOG}
 STATUS_CHECK
 print_head "removing old content"
 rm -rf /app/* &>>${LOG}
@@ -29,7 +30,7 @@ print_head "installing npm"
 
 npm install &>>${LOG}
 STATUS_CHECK
- print_head "confguring node js repos"
+ print_head "configuring node js repos"
 cp ${script_location}/files/catalogue.service /etc/systemd/system/catalogue.service
 STATUS_CHECK
 print_head "starting catalogue service"
