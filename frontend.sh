@@ -2,7 +2,7 @@ script_location=$(pwd)
 LOG=/tmp/roboshop.log
 echo -e "\e[35m Install Nginx\e[0m"
 yum install nginx -y &>>${LOG}
-if [ $ -eq 0 ];then
+if [ $? -eq 0 ];then
   echo SUCCESS
   else
     echo FAILED
