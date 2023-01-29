@@ -1,4 +1,4 @@
-script_location=$(pwd)
+source common.sh
 print_head "copy mongodb repo files"
 cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo
 STATUS_CHECK
