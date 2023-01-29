@@ -78,7 +78,7 @@ if [ $? -eq 0 ];then
     echo FAILED
       fi
 echo -e "\e[33m confguring mongodb service\e[0m"
-cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo $>>${LOG}
+cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${LOG}
 if [ $? -eq 0 ];then
   echo SUCCESS
   else
@@ -86,7 +86,7 @@ if [ $? -eq 0 ];then
       fi
 echo -e "\e[33m INSTALLING mongodb client\e[0m"
 
-yum install mongodb-org-shell -y $>>${LOG}
+yum install mongodb-org-shell -y &>>${LOG}
 if [ $? -eq 0 ];then
   echo SUCCESS
   else
@@ -94,7 +94,7 @@ if [ $? -eq 0 ];then
       fi
 
 echo -e "\e[33m loading mongodb schema\e[0m"
-mongo --host 172.31.6.119 </app/schema/catalogue.js $>>${LOG}
+mongo --host 172.31.6.119 </app/schema/catalogue.js &>>${LOG}
 
 if [ $? -eq 0 ];then
   echo SUCCESS
