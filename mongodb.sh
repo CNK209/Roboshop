@@ -17,3 +17,4 @@ print_head "install mongodb"
 systemctl restart mongod &>>${LOG}
 STATUS_CHECK
 
+
