@@ -13,7 +13,7 @@ STATUS_CHECK(){
 print_head() {
   echo -e "\e[1m $1 \e[0m"
 }
-NODE JS() {
+NODEJS() {
   source common.sh
   print_head "configuring node js repos"
   curl -sL https://rpm.nodesource.com/setup_lts.x | bash &>>${LOG}
