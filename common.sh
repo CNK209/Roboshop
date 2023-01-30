@@ -13,6 +13,20 @@ STATUS_CHECK(){
 print_head() {
   echo -e "\e[1m $1 \e[0m"
 }
+SYSTEMD_SETUP() {
+   print_head "configuring node js repos"
+    cp ${script_location}/files/${component}.service /etc/systemd/system/${component}.service
+    STATUS_CHECK
+    print_head "reload ${component} service"
+    systemctl daemon-reload &>>${LOG}
+    STATUS_CHECK
+    print_head "enabling ${component} service"
+    systemctl enable ${component} &>>${LOG}
+    STATUS_CHECK
+    print_head "starting ${component} service"
+    systemctl start ${component} &>>${LOG}
+    STATUS_CHECK
+}
 APP PRE_REQ() {
   print_head "Add application user"
     id roboshop &>>${LOG}
@@ -32,6 +46,33 @@ APP PRE_REQ() {
         unzip /tmp/${component}.zip &>>${LOG}
         STATUS_CHECK
 }
+LOAD_SCHEMA() {
+  if [ ${schema_load} == "true" ]; then
+    if [ ${schema_type} == "mongo" ]; then
+    print_head "configuring mongodb service"
+    cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${LOG}
+    STATUS_CHECK
+
+    print_head "INSTALLING mongodb client"
+    yum install mongodb-org-shell -y &>>${LOG}
+    STATUS_CHECK
+
+    print_head "loading mongodb schema"
+    mongo --host mongodb-dev.devops009.online </app/schema/${component}.js &>>${LOG}
+    STATUS_CHECK
+    fi
+    fi
+
+    if [ ${schema_type} == "mysql" ]; then
+
+        print_head "INSTALLING mysql client"
+        yum install mysql -y &>>${LOG}
+        STATUS_CHECK
+
+        print_head "loading  schema"
+        mysql -h mysql-dev.devops009.online -uroot -p${root_mysql_password} < /app/schema/shipping.sql
+        STATUS_CHECK
+}
 NODEJS() {
   source common.sh
   print_head "configuring node js repos"
@@ -46,32 +87,10 @@ NODEJS() {
   print_head "installing npm"
   npm install &>>${LOG}
   STATUS_CHECK
-   print_head "configuring node js repos"
-  cp ${script_location}/files/${component}.service /etc/systemd/system/${component}.service
-  STATUS_CHECK
-  print_head "starting ${component} service"
-  systemctl daemon-reload &>>${LOG}
-  STATUS_CHECK
-  print_head "enabling ${component} service"
-  systemctl enable ${component} &>>${LOG}
-  STATUS_CHECK
-  print_head "starting ${component} service"
-  systemctl start ${component} &>>${LOG}
-  STATUS_CHECK
-  if [ ${schema_load} == "true" ]; then
-  print_head "configuring mongodb service"
-  cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${LOG}
-  STATUS_CHECK
-  print_head "INSTALLING mongodb client"
+  SYSTEMD_SETUP
+  LOAD_SCHEMA
 
-  yum install mongodb-org-shell -y &>>${LOG}
-  STATUS_CHECK
 
-  print_head "loading mongodb schema"
-  mongo --host mongodb-dev.devops009.online </app/schema/${component}.js &>>${LOG}
-
-  STATUS_CHECK
-  fi
   }
   MAVEN() {
      print_head "Install MAVEN"
@@ -82,6 +101,10 @@ NODEJS() {
        print_head "build a package"
        mvn clean package &>>{LOG}
        STATUS_CHECK
-       print_head " "
-       mv target/shipping-1.0.jar shipping.jar
+
+       print_head "copy app file to app location"
+       mv target/${component}-1.0.jar ${component}.jar &>>{LOG}
+       STATUS_CHECK
+       SYSTEMD_SETUP
+       LOAD_SCHEMA
   }
