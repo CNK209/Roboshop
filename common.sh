@@ -70,3 +70,4 @@ NODE JS(){
   mongo --host mongodb-dev.devops009.online </app/schema/${component}.js &>>${LOG}
 
   STATUS_CHECK
+  }
