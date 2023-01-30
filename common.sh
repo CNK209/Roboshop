@@ -58,6 +58,7 @@ NODEJS() {
   print_head "starting ${component} service"
   systemctl start ${component} &>>${LOG}
   STATUS_CHECK
+  if [ ${schema_load} == "true" ]; then
   print_head "configuring mongodb service"
   cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${LOG}
   STATUS_CHECK
@@ -70,4 +71,5 @@ NODEJS() {
   mongo --host mongodb-dev.devops009.online </app/schema/${component}.js &>>${LOG}
 
   STATUS_CHECK
+  fi
   }
