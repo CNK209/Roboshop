@@ -27,7 +27,8 @@ SYSTEMD_SETUP() {
     systemctl start ${component} &>>${LOG}
     STATUS_CHECK
 }
-APP PRE_REQ() {
+APP PRE_REQ(){
+
   print_head "Add application user"
     id roboshop &>>${LOG}
     if [ $? -ne 0 ];then
