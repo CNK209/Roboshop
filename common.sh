@@ -27,7 +27,7 @@ SYSTEMD_SETUP() {
     systemctl start ${component} &>>${LOG}
     STATUS_CHECK
 }
-APP PRE_REQ(){
+APP_PREREQ() {
 
   print_head "Add application user"
     id roboshop &>>${LOG}
@@ -83,7 +83,7 @@ NODEJS() {
   yum install nodejs -y &>>${LOG}
   STATUS_CHECK
 
-   APP PRE_REQ
+   APP_PREREQ
 
   print_head "installing npm"
   npm install &>>${LOG}
@@ -98,7 +98,7 @@ NODEJS() {
        yum install maven -y &>>${LOG}
        STATUS_CHECK
 
-       APP PRE_REQ
+       APP_PREREQ
        print_head "build a package"
        mvn clean package &>>{LOG}
        STATUS_CHECK
