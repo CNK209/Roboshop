@@ -73,7 +73,7 @@ LOAD_SCHEMA() {
         print_head "loading  schema"
         mysql -h mysql-dev.devops009.online -uroot -p${root_mysql_password} < /app/schema/shipping.sql
         STATUS_CHECK
-}
+       }
 NODEJS() {
   source common.sh
   print_head "configuring node js repos"
