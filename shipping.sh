@@ -1,6 +1,6 @@
 source common.sh
 if [ -z "${root_mysql_pqssword}" ]; then
-  echo "variable root_mysql_pqssword is needed"
+  echo "variable root_mysql_password is needed"
   exit
   fi
 component=shipping
