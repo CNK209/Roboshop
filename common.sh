@@ -110,3 +110,21 @@ NODEJS() {
        SYSTEMD_SETUP
        LOAD_SCHEMA
   }
+  PYTHON() {
+    print_head "Install PYTHON "
+           yum install python36 gcc python3-devel -y &>>${LOG}
+           STATUS_CHECK
+
+           APP_PREREQ
+           print_head "Download dependencies"
+           cd /app
+           pip3.6 install -r requirements.txt &>>{LOG}
+           STATUS_CHECK
+
+           print_head "update passwords in service file"
+           sed -i -e "s/roboshop_rabbitmq_password/${roboshop_rabbitmq_password}" ${script_location}files/${component}.service
+            STATUS_CHECK
+
+           SYSTEMD_SETUP
+           LOAD_SCHEMA
+  }
