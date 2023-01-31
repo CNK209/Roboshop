@@ -141,17 +141,17 @@ NODEJS() {
        STATUS_CHECK
 
          print_head "update passwords in service file"
-           sed -i -e "s/roboshop_rabbitmq_password/${roboshop_rabbitmq_password}/" ${script_location}/files/${component}.service &>>{LOG}
+    sed -i -e "s/roboshop_rabbitmq_password/${roboshop_rabbitmq_password}/" ${script_location}/files/${component}.service &>>{LOG}
             STATUS_CHECK
        print_head "reload daemon"
        systemctl daemon-reload &>>{LOG}
        STATUS_CHECK
 
        print_head "Enable  Dispatch"
-       systemctl enable dispatch
+       systemctl enable dispatch &>>{LOG}
        STATUS_CHECK
 
        print_head "Start Dispatch"
-       systemctl start dispatch
+       systemctl start  &>>{LOG}
        STATUS_CHECK
   }
