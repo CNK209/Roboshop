@@ -4,9 +4,9 @@ yum install python36 gcc python3-devel -y &>>${LOG}
 STATUS_CHECK
 
 print_head "Add Application user"
-rabbitmqctl list_users | grep roboshop &>>{LOG}
+rabbitmqctl list_users | grep roboshop &>>${LOG}
 if [ $? -ne 0 ]; then
-useradd roboshop ${roboshop_rabbitmq_password} &>>${LOG}
+rabbitmqctl add_user roboshop ${roboshop_rabbitmq_password} &>>${LOG}
 fi
 STATUS_CHECK
 
