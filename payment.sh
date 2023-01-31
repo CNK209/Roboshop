@@ -6,9 +6,9 @@ STATUS_CHECK
 print_head "Add Application user"
 rabbitmqctl list_users | grep roboshop &>>{LOG}
 if [ $? -ne 0 ]; then
-useradd roboshop &>>${LOG}
-STATUS_CHECK
+useradd roboshop ${roboshop_rabbitmq_password} &>>${LOG}
 fi
+STATUS_CHECK
 
 mkdir /app &>>${LOG}
 print_head "Downloading payment repos"
