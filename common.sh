@@ -49,8 +49,9 @@ APP_PREREQ() {
 }
 LOAD_SCHEMA() {
   if [ ${schema_load} == "true" ]; then
+
     if [ ${schema_type} == "mongo" ]; then
-    print_head "configuring mongodb service"
+    print_head "configuring mongo repo"
     cp ${script_location}/files/mongodb.repo /etc/yum.repos.d/mongodb.repo &>>${LOG}
     STATUS_CHECK
 
@@ -62,7 +63,7 @@ LOAD_SCHEMA() {
     mongo --host mongodb-dev.devops009.online </app/schema/${component}.js &>>${LOG}
     STATUS_CHECK
     fi
-    fi
+
 
     if [ ${schema_type} == "mysql" ]; then
 
@@ -73,6 +74,7 @@ LOAD_SCHEMA() {
         print_head "loading  schema"
         mysql -h mysql-dev.devops009.online -uroot -p${root_mysql_password} < /app/schema/shipping.sql
         STATUS_CHECK
+        fi
         fi
        }
 NODEJS() {
