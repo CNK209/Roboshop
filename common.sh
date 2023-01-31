@@ -128,7 +128,7 @@ NODEJS() {
            SYSTEMD_SETUP
            LOAD_SCHEMA
   }
-  GOLANG(){
+  GOLANG() {
     print_head "Install golang"
     yum install golang -y &>>{LOG}
     STATUS_CHECK
