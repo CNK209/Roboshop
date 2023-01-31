@@ -152,6 +152,6 @@ NODEJS() {
        STATUS_CHECK
 
        print_head "Start Dispatch"
-       systemctl start  &>>{LOG}
+       systemctl start dispatch  &>>{LOG}
        STATUS_CHECK
   }
