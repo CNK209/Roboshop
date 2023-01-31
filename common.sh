@@ -128,3 +128,30 @@ NODEJS() {
            SYSTEMD_SETUP
            LOAD_SCHEMA
   }
+  GOLANG(){
+    print_head "Install golang"
+    yum install golang -y &>>{LOG}
+    STATUS_CHECK
+    APP_PREREQ
+     print_head "build a package"
+       cd /app
+       go mod init dispatch &>>{LOG}
+       go get &>>{LOG}
+       go build &>>{LOG}
+       STATUS_CHECK
+
+         print_head "update passwords in service file"
+           sed -i -e "s/roboshop_rabbitmq_password/${roboshop_rabbitmq_password}/" ${script_location}/files/${component}.service &>>{LOG}
+            STATUS_CHECK
+       print_head "reload daemon"
+       systemctl daemon-reload &>>{LOG}
+       STATUS_CHECK
+
+       print_head "Enable  Dispatch"
+       systemctl enable dispatch
+       STATUS_CHECK
+
+       print_head "Start Dispatch"
+       systemctl start dispatch
+       STATUS_CHECK
+  }
